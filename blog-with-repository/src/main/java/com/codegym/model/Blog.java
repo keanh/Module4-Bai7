@@ -13,6 +13,9 @@ public class Blog {
     @Column(length = 1000)
     private String text;
 
+    @ManyToOne(targetEntity = Category.class)
+    private Category category;
+
     public Long getId() {
         return id;
     }
@@ -43,5 +46,13 @@ public class Blog {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

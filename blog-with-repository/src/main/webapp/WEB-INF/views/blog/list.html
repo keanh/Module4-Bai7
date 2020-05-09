@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/create-blog">Create new blog</a>
+<a href="/create-blog">Create new blog</a><br>
+<a href="/categories">View by category</a>
 <form>
     Search by name:
     <input name="s" type="text"/>
@@ -16,6 +17,7 @@
     <tr>
         <th>Name</th>
         <th>Author</th>
+        <th>Category</th>
         <th>Text</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -24,6 +26,7 @@
         <tr>
             <td th:text="${blog.name}"></td>
             <td th:text="${blog.author}"></td>
+            <td th:text="${blog.category.name}"></td>
             <td th:text="${blog.text}"></td>
             <td><a th:href="@{/edit-blog/__${blog.id}__ }">Edit</a></td>
             <td><a th:href="@{/delete-blog/__${blog.id}__ }">Delete</a></td>

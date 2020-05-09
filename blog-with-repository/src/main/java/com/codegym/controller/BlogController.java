@@ -1,7 +1,9 @@
 package com.codegym.controller;
 
 import com.codegym.model.Blog;
+import com.codegym.model.Category;
 import com.codegym.service.BlogService;
+import com.codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,14 @@ import java.util.Optional;
 public class BlogController {
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @ModelAttribute("categories")
+    public Iterable<Category> categories(){
+        return categoryService.findAll();
+    }
 
     @GetMapping("/blogs")
     public ModelAndView listBlogs(@RequestParam("s") Optional<String> s, Pageable pageable){
