@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/create-blog">Create new blog</a>
+<form>
+    Search by name:
+    <input name="s" type="text"/>
+    <input type="submit" value="Search"/>
+</form><br/>
+<h1>Blog</h1>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Text</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <th:block th:each="blog : ${blogs}">
+        <tr>
+            <td th:text="${blog.name}"></td>
+            <td th:text="${blog.author}"></td>
+            <td th:text="${blog.text}"></td>
+            <td><a th:href="@{/edit-blog/__${blog.id}__ }">Edit</a></td>
+            <td><a th:href="@{/delete-blog/__${blog.id}__ }">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
+<div>
+    <a th:href="@{'/blogs'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{'/blogs'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+</div>
+</body>
+</html>
