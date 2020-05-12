@@ -5,14 +5,17 @@ import com.codegym.model.Category;
 import com.codegym.service.BlogService;
 import com.codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import java.util.List;
+
+//@Controller
+@RestController
 public class CategoryController {
     @Autowired
     private BlogService blogService;
@@ -26,6 +29,15 @@ public class CategoryController {
         ModelAndView modelAndView = new ModelAndView("/category/list");
         modelAndView.addObject("categories",categories);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/categories/",method = RequestMethod.GET)
+    public ResponseEntity<List<Category>> listCategories(){
+        List<Category> categories = (List<Category>) categoryService.findAll();
+        if (categories.isEmpty()){
+            return new ResponseEntity<List<Category>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Category>>(categories,HttpStatus.OK);
     }
 
     @GetMapping("/create-category")
@@ -96,5 +108,12 @@ public class CategoryController {
         modelAndView.addObject("category",category);
         modelAndView.addObject("blogs",blogs);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/category-blog/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Blog>> findBlogByCategory(@PathVariable("id") Long id){
+        Category category = categoryService.findById(id);
+        List<Blog> blogs = (List<Blog>) blogService.findAllByCategory(category);
+        return new ResponseEntity<List<Blog>>(blogs,HttpStatus.OK);
     }
 }

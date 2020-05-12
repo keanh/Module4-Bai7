@@ -7,14 +7,19 @@ import com.codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+//@Controller
+@RestController
 public class BlogController {
     @Autowired
     private BlogService blogService;
@@ -39,6 +44,24 @@ public class BlogController {
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blogs",blogs);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/blogs/", method = RequestMethod.GET)
+    public ResponseEntity<List<Blog>> showAllBlogs(){
+        List<Blog> blogs = blogService.findAllBlogsResful();
+        if (blogs.isEmpty()){
+            return new ResponseEntity<List<Blog>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Blog>>(blogs,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/blogs-view/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Blog> showBlog(@PathVariable("id") Long id){
+        Blog blog = blogService.findById(id);
+        if (blog == null){
+            return new ResponseEntity<Blog>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Blog>(blog,HttpStatus.OK);
     }
 
     @GetMapping("/create-blog")
