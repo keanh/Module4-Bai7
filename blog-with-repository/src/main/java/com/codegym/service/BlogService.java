@@ -15,4 +15,5 @@ public interface BlogService {
     void remove(Long id);
     Page<Blog> findAllByNameContaining(String name,Pageable pageable);
     Iterable<Blog> findAllByCategory(Category category);
+    List<Blog> findAllByName(String name);
 }

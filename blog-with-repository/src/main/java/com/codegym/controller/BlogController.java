@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,7 +30,14 @@ public class BlogController {
         return categoryService.findAll();
     }
 
-    @GetMapping("/blogs")
+    @GetMapping(value = "/testI18N")
+    public ModelAndView I18N(){
+        ModelAndView modelAndView = new ModelAndView("/blog/test");
+        modelAndView.addObject("credential",new Blog());
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/blogs")
     public ModelAndView listBlogs(@RequestParam("s") Optional<String> s, Pageable pageable){
         Page<Blog> blogs;
         if (s.isPresent()){
@@ -44,6 +49,14 @@ public class BlogController {
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blogs",blogs);
         return modelAndView;
+    }
+
+    @PostMapping (value = "/search-blogs",produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Blog>> search(@RequestBody Blog blog){
+        List<Blog> blogs = blogService.findAllByName(blog.getName());
+        return new ResponseEntity<List<Blog>>(blogs,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/blogs/", method = RequestMethod.GET)

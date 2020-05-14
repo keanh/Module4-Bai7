@@ -47,4 +47,9 @@ public class BlogServiceImpl implements BlogService {
     public Iterable<Blog> findAllByCategory(Category category) {
         return blogRepository.findAllByCategory(category);
     }
+
+    @Override
+    public List<Blog> findAllByName(String name) {
+        return blogRepository.findAllByName(name);
+    }
 }
