@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{customerView.title}"></title>
 </head>
 <body>
 <a href="/create-customer">Create new customer</a>
+Language: <a href="?lang=en">English</a> | <a href="?lang=vi">Tiếng việt</a>
 <form>
     Search by first name:
     <input name="s" type="text"/>
     <input type="submit" value="Search"/>
 </form><br/>
-<h1>Customers</h1>
+<h1 th:text="#{customerView.heading}"></h1>
 <table border="1">
     <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Province</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th th:text="#{customerView.firstName}"></th>
+        <th th:text="#{customerView.lastName}"></th>
+        <th th:text="#{customerView.province}"></th>
+        <th th:text="#{customerView.edit}"></th>
+        <th th:text="#{customerView.delete}"></th>
     </tr>
     <th:block th:each="customer : ${customers}">
         <tr>

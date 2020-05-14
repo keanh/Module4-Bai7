@@ -32,8 +32,8 @@ public class CustomerController {
     public ModelAndView showCreateForm(){
         ModelAndView modelAndView = new ModelAndView("/customer/create");
         modelAndView.addObject("customer", new Customer());
-        Iterable<Province> provinces = provinceService.findAll();
-        modelAndView.addObject("provinces",provinces);
+//        Iterable<Province> provinces = provinceService.findAll();
+//        modelAndView.addObject("provinces",provinces);
         return modelAndView;
     }
 
