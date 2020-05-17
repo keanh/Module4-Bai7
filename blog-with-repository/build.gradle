@@ -24,6 +24,10 @@ dependencies {
 
     compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.17.RELEASE'
     compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: '3.0.9.RELEASE'
+
+    compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '1.2'
+    compile group: 'org.springframework', name: 'spring-aspects', version: '4.3.25.RELEASE'
+
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.11.12.RELEASE'
 
@@ -33,4 +37,9 @@ dependencies {
 //    Ajax
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+    //Security
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.3.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.3.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.2.3.RELEASE'
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
 }

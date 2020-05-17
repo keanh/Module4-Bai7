@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Spring Security Example</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#submit').click(function(event) {
+                var search = $('#s').val();
+                var json ={"name":search};
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type : "POST",
+                    data: JSON.stringify(json),
+                    url: "http://localhost:8080/search-blogs",
+                    success: function(list) {
+                        var respContent = "";
+                        for (let blog of list){
+                            respContent += "<p class='success'>";
+                            respContent += blog.name + " : ";
+                            respContent += blog.author + " : ";
+                            respContent += blog.text + " : ";
+                            respContent += blog.category.name + "</p>";
+                        }
+                        $("#blogList").html(respContent);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#s").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h2>Spring Security Example</h2>
+<hr/>
+<h3>
+    Welcome !
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="principal.username"></span>
+    </div>
+</h3>
+
+Search by name:
+<input name="s" id="s" type="text"/>
+<button id="submit">Tìm</button>
+<div id="blogList"></div>
+<form>
+    <input type="text" name="s">
+    <input type="submit" value="Tìm">
+</form>
+
+<div sec:authorize="isAnonymous()">
+    Login as <a th:href="@{/user}">User</a> or <a th:href="@{/admin}">Admin</a>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <div sec:authorize="hasRole('USER')">
+        <a th:href="@{/user}">My Profile</a>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/admin}">My Profile</a>
+    </div>
+    <a th:href="@{/logout}">Logout</a>
+</div>
+
+<h1>Blog</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Text</th>
+    </tr>
+    </thead>
+    <tbody id="myTable">
+    <th:block th:each="blog : ${blogs}">
+        <tr>
+            <td th:text="${blog.name}"></td>
+            <td th:text="${blog.author}"></td>
+            <td th:text="${blog.category.name}"></td>
+            <td th:text="${blog.text}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{'/'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{'/'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+</div>
+</body>
+</html>

@@ -51,8 +51,7 @@ public class BlogController {
         return modelAndView;
     }
 
-    @PostMapping (value = "/search-blogs",produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping (value = "/search-blogs")
     @ResponseBody
     public ResponseEntity<List<Blog>> search(@RequestBody Blog blog){
         List<Blog> blogs = blogService.findAllByName(blog.getName());
