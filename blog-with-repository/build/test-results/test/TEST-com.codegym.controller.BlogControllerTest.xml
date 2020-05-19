@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.codegym.controller.BlogControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-19T09:37:05" hostname="LAPTOP-NIU4M5N8" time="1.063">
+  <properties/>
+  <testcase name="customerListPageIsExists()" classname="com.codegym.controller.BlogControllerTest" time="1.063"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+May 19, 2020 4:37:06 PM org.hibernate.validator.internal.util.Version <clinit>
+INFO: HV000001: Hibernate Validator 6.0.10.Final
+]]></system-err>
+</testsuite>

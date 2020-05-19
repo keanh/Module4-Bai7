@@ -1,9 +1,6 @@
 
 import com.codegym.formatter.CategoryFormatter;
-import com.codegym.service.BlogService;
-import com.codegym.service.BlogServiceImpl;
-import com.codegym.service.CategoryService;
-import com.codegym.service.CategoryServiceImpl;
+import com.codegym.service.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -61,6 +58,11 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
 
     @Bean
+    public UserService userService(){
+        return new UserServiceImpl();
+    }
+
+    @Bean
     public BlogService blogService(){
         return new BlogServiceImpl();
     }
@@ -69,6 +71,8 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public CategoryService categoryService(){
         return new CategoryServiceImpl();
     }
+
+
     //Thymeleaf Configuration
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
